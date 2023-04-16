@@ -1,4 +1,7 @@
--- Select the data that we are going to be using
+-- The following project is to demonstrate some of my skills in SQL
+-- I used the CovidDeaths and CovidVaccinations datasets for analysis.
+
+-- Selecting the data that will be used
 
 Select Location, date, total_cases, new_cases, total_deaths, population
 From CovidDeaths
@@ -138,7 +141,7 @@ AND dea.new_vaccinations IS NOT NULL
 Select *, ROUND((RollingPeopleVaccinated/Population)*100,3) AS PercentPopulationVaccinated
 From PopvsVac
 
--- Using Temp Table to perform Calculation on Partition By in previous query
+-- Using Temporary Table to perform Calculation on Partition By in previous query
 
 DROP Table if exists #PercentPopulationVaccinated
 Create Table #PercentPopulationVaccinated (
@@ -159,8 +162,6 @@ Join CovidVaccinations vac
 	On dea.location = vac.location
 	and dea.date = vac.date
 	and dea.new_vaccinations is not null
---where dea.continent is not null 
---order by 2,3
 
 Select *, (RollingPeopleVaccinated/Population)*100 as PercentPopulationVaccinated
 From #PercentPopulationVaccinated
@@ -170,7 +171,6 @@ From #PercentPopulationVaccinated
 Create View PercentPopulationVaccinated as
 Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
 , SUM(CONVERT(int,vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location, dea.Date) as RollingPeopleVaccinated
---, (RollingPeopleVaccinated/population)*100
 From CovidDeaths dea
 Join CovidVaccinations vac
 	On dea.location = vac.location

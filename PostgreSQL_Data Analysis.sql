@@ -8,10 +8,11 @@
 
 -- Creating the DEPARTMENTS table and adding VALUES to it
 
-CREATE TABLE departments 
-	(department VARCHAR(100),
-    division VARCHAR(100),
-    PRIMARY KEY(department));
+CREATE TABLE departments (
+	department VARCHAR(100),
+	division VARCHAR(100),
+	PRIMARY KEY(department)
+	);
 
 INSERT INTO departments VALUES 
 	('Clothing','Home'),
@@ -69,7 +70,8 @@ CREATE TABLE employees (
 	gender VARCHAR(1),
 	salary INT,
 	region_id INT,
-	PRIMARY KEY (employee_id));
+	PRIMARY KEY (employee_id)
+	);
 
 insert into employees values (1, 'Berrie', 'Manueau', 'bmanueau0@dion.ne.jp', '2006-04-20', 'Sports', 'F', 154864, 4);
 insert into employees values (2, 'Aeriell', 'McNee', 'amcnee1@google.es', '2009-01-26', 'Tools', 'F', 56752, 3);
@@ -1078,10 +1080,11 @@ SELECT * FROM employees
 
 -- Creating tables students, courses, student_enrollment, professors, and teach.
 
-CREATE TABLE students
-	(student_no integer,
+CREATE TABLE students(
+	student_no integer,
 	student_name varchar(20),
-	age integer);
+	age integer
+	);
 
 insert into students values (1, 'Michael', 19);
 insert into students values (2, 'Doug', 18);
@@ -2058,12 +2061,14 @@ FROM (SELECT season, SUM(supply * cost_per_unit) AS total_cost
 
 -- Usng a correlated subquery to show the employees that make a salary higher than their department salary
 
-SELECT first_name, salary
+SELECT
+	first_name,
+	salary
 FROM employees AS E1
 WHERE salary > (SELECT
-					ROUND(AVG(salary))
-				FROM employees AS E2
-			   WHERE E1.department = E2.department);
+			ROUND(AVG(salary))
+		FROM employees AS E2
+		WHERE E1.department = E2.department);
 			   
 			   
 -- Employees that make a salary higher than their region salary
@@ -2073,7 +2078,7 @@ SELECT
 	department,
 	salary,
 	(SELECT
-	 	ROUND(AVG(salary))
+		ROUND(AVG(salary))
 	FROM employees E2
 	WHERE E1.department = E2.department) AS avg_department_salary
 FROM employees AS E1;

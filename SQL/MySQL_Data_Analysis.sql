@@ -3536,7 +3536,7 @@ FROM dept_emp;
 -- use a subquery to retrieve this value from the 'dept_emp' table)
 -- assign '110022' as 'manager' to all individuals whose employee number is lower than or equal to 10020, and '110039' to those whose number is between 10021 and 10040 inclusive.
 ## Use a CASE statement to create the third field.
-## If you've worked correctly, you should obtain an output containing 40 rows.
+## If done correctly, the output should return 40 rows.
 
 SELECT
     emp_no,
